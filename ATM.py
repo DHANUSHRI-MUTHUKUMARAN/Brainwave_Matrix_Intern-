@@ -55,7 +55,6 @@ def atm_interface():
             '4': lambda: print("THANK YOU! HAVE A NICE DAY!\n*****************")
         }
 
-        # Single-line execution
         if (action := switch.get(choice, lambda: print("*****************\nTHIS IS NOT A VALID CHOICE\n*****************")))() or choice == '4':
             break
 
