@@ -1,68 +1,68 @@
-def show_balance(balance):
-    print("************")
-    print(f"Your balance is ${balance:.2f}")
-    print("************")
-def deposit():
-    print("************")
-    amount=float(input("ENTER AN AMOUNT TO BE DEPOSITED:"))
-    print("*****************")
-    if amount <0:
-        print("*****************")
-        print("THAT'S NOT A VALID AMOUNT")
-        print("*****************")
-        return 0
-    else:
-        return amount
-def withdraw(balance):
-    print("*****************")
-    amount=float(input("ENTER AMOUNT TO BE WITHDRAWN:"))
-    print("*****************")
-    if amount > balance:
-        print("*****************")
-        print("INSUFFICENT FUNDS")
-        print("*****************")
-        return 0
-    elif amount < 0:
-        print("*****************")
-        print("AMOUNT MUST BE GREATER THAN 0")
-        print("*****************")
-        return 0
-    else:
-        return amount
-
-def main():
-    balance=0
-    is_running=True
+class ATM:
+    def __init__(self, balance=0):
+        self.balance = balance
     
-    while is_running:
+    def check_balance(self):
+        print("*****************")
+        print(f"YOUR BALANCE IS ${self.balance:.2f}")
+        print("*****************")
+    
+    def deposit(self):
+        print("*****************")
+        amount = float(input("ENTER AN AMOUNT TO BE DEPOSITED:"))
+        print("*****************")
+        if amount < 0:
+            print("*****************")
+            print("THAT'S NOT A VALID AMOUNT")
+            print("*****************")
+        else:
+            self.balance += amount
+    
+    def withdraw(self):
+        print("*****************")
+        amount = float(input("ENTER AMOUNT TO BE WITHDRAWN:"))
+        print("*****************")
+        if amount > self.balance:
+            print("*****************")
+            print("INSUFFICIENT FUNDS")
+            print("*****************")
+        elif amount < 0:
+            print("*****************")
+            print("AMOUNT MUST BE GREATER THAN 0")
+            print("*****************")
+        else:
+            self.balance -= amount
+
+def atm_interface():
+    atm = ATM(0)
+    switch = {
+        '1': atm.check_balance,
+        '2': atm.deposit,
+        '3': atm.withdraw,
+        '4': lambda: print("THANK YOU! HAVE A NICE DAY!\n*****************")
+    }
+    
+    while True:
         print("*****************")
         print("BANKING PROGRAM")
         print("*****************")
-        print("1.SHOW BALANCE")
+        print("1. Show Balance")
         print("*****************")
-        print("2.DEPOSIT")
+        print("2. Deposit")
         print("*****************")
-        print("3.WITHDRAW")
+        print("3. Withdraw")
         print("*****************")
-        print("4.EXIT")
+        print("4. Exit")
         print("*****************")
-            
-        choice=input("ENTER YOUR CHOICE (1-4):")
-        if choice == '1':
-            show_balance(balance)
-        elif choice == '2':
-            balance += deposit()
-        elif choice == '3':
-            balance -= withdraw(balance)
-        elif choice == '4':
-            is_running=False
+        
+        choice = input("ENTER YOUR CHOICE (1-4):")
+        action = switch.get(choice, lambda: print("*****************\nTHIS IS NOT A VALID CHOICE\n*****************"))
+        if choice == '4':
+            action()
+            break
         else:
-            print("*****************")
-            print("THIS IS NOT A VALID CHOICE")
-            print("*****************")
-    print("*****************")
-    print("THANK YOU! HAVE A NICE DAY!")
-    print("*****************")
+            action()
 
-if __name__ =='__main__':
-    main()
+if __name__ == "__main__":
+    atm_interface()
+
