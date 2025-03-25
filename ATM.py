@@ -35,33 +35,29 @@ class ATM:
 
 def atm_interface():
     atm = ATM(0)
-    switch = {
-        '1': atm.check_balance,
-        '2': atm.deposit,
-        '3': atm.withdraw,
-        '4': lambda: print("THANK YOU! HAVE A NICE DAY!\n*****************")
-    }
     
     while True:
         print("*****************")
         print("BANKING PROGRAM")
         print("*****************")
         print("1. Show Balance")
-        print("*****************")
         print("2. Deposit")
-        print("*****************")
         print("3. Withdraw")
-        print("*****************")
         print("4. Exit")
         print("*****************")
         
         choice = input("ENTER YOUR CHOICE (1-4):")
-        action = switch.get(choice, lambda: print("*****************\nTHIS IS NOT A VALID CHOICE\n*****************"))
-        if choice == '4':
-            action()
+        
+        switch = {
+            '1': atm.check_balance,
+            '2': atm.deposit,
+            '3': atm.withdraw,
+            '4': lambda: print("THANK YOU! HAVE A NICE DAY!\n*****************")
+        }
+
+        # Single-line execution
+        if (action := switch.get(choice, lambda: print("*****************\nTHIS IS NOT A VALID CHOICE\n*****************")))() or choice == '4':
             break
-        else:
-            action()
 
 if __name__ == "__main__":
     atm_interface()
