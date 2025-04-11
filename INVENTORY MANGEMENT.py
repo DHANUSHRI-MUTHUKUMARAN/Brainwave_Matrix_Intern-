@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 import sqlite3
 
-# ------------------ Database Setup ------------------
 conn = sqlite3.connect("inventory.db")
 cursor = conn.cursor()
 
@@ -16,7 +15,6 @@ cursor.execute('''
 ''')
 conn.commit()
 
-# ------------------ Core Functions ------------------
 def add_product(name, quantity, price):
     cursor.execute("INSERT INTO products (name, quantity, price) VALUES (?, ?, ?)", (name, quantity, price))
     conn.commit()
@@ -37,7 +35,6 @@ def get_low_stock(threshold=5):
     cursor.execute("SELECT * FROM products WHERE quantity <= ?", (threshold,))
     return cursor.fetchall()
 
-# ------------------ GUI Functions ------------------
 def show_inventory():
     inventory_list.delete(0, tk.END)
     for row in get_all_products():
@@ -79,7 +76,6 @@ def show_low_stock():
         msg = "No low-stock items."
     messagebox.showinfo("Low Stock Alert", msg)
 
-# ------------------ Main GUI ------------------
 root = tk.Tk()
 root.title("Inventory Management System")
 
